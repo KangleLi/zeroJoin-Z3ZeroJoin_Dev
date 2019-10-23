@@ -1,0 +1,36 @@
+<!-- 
+     
+-->
+
+<configurator>
+  <domain name="SimonTest" />
+  <!-- Use manufacturerCode to indicate that this is a manufacturer specific
+       cluster. -->
+  <cluster manufacturerCode="0x1254">
+    <name>RxTx</name>
+    <domain>SimonTest</domain>
+    <description>RxTx.
+      </description>
+    <!-- Cluster Id must be within the mfg spec range 0xfc00 - 0xffff -->
+    <code>0xFC80</code> 
+    <define>RXTX_CLUSTER</define>
+    <client init="false" tick="false">true</client>
+    <server init="false" tick="false">true</server>
+    <attribute side="server" code="0x0000" define="ATTRIBUTE_MODE_ID" 
+      type="INT8U"  min="0x00"   max="0xFF"   writable="false"  
+      default="0x00" optional="true">Mode</attribute>
+
+    <attribute side="server" code="0x0001" define="ATTRIBUTE_CHANNEL_ID" 
+      type="INT8U"  min="0x00"   max="0xFF"   writable="false"  
+      default="0x00" optional="true">Channel</attribute>
+
+    <attribute side="server" code="0x0002" define="ATTRIBUTE_POWER_ID" 
+      type="INT8S"  min="0x00"   max="0xFF"   writable="false"  
+      default="0x00" optional="true">Power</attribute>
+
+    <attribute side="server" code="0x0003" define="ATTRIBUTE_HEADER_ID" 
+      type="INT16U"  min="0x0000"   max="0xFFFF"   writable="false"  
+      default="0x0000" optional="false">Header</attribute>
+  </cluster>
+</configurator>
+
