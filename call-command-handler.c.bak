@@ -61,6 +61,9 @@ EmberAfStatus emberAfClusterSpecificCommandParse(EmberAfClusterCommand *cmd)
     case ZCL_BASIC_CLUSTER_ID:
       result = emberAfBasicClusterServerCommandParse(cmd);
       break;
+    case ZCL_RXTX_CLUSTER_ID:
+      result = status(false, true, cmd->mfgSpecific);
+      break;
     default:
       // Unrecognized cluster ID, error status will apply.
       break;

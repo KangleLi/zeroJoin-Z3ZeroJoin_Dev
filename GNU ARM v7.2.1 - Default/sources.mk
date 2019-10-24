@@ -39,6 +39,7 @@ manufacturing-library-cli \
 mbedtls/EFR32 \
 network-find \
 network-steering \
+on-off \
 scan-dispatch \
 serial/EFR32 \
 serial \
@@ -47,4 +48,5 @@ simple-main \
 strong-random \
 update-tc-link-key \
 zcl-framework-core \
+zll-on-off-server \
 

@@ -5,7 +5,7 @@
 
 
 #define _ZEROJOIN_CHANNEL						17
-#define _ZEROJOIN_POWER							19
+#define _ZEROJOIN_POWER							3
 #define _ZEROJOIN_PACKET_LENGTH_LIMIT			15		// 综合包长度限制最小值
 #define _ZEROJOIN_PACKET_LENGTH_CMD				47		// Down-GWCMD Length
 #define _ZEROJOIN_PACKET_LENGTH_CMD_ACK			18		// Up-CMDAck Length

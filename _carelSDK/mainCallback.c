@@ -76,8 +76,8 @@ void emberAfMainTickCallback(void){
 		_zeroJoin_PrintStackToken();
 
 		// 启动初始化任务
-		extern EmberEventControl _carel_MainInit_EC;
-		emberEventControlSetDelayMS(_carel_MainInit_EC, 1000);
+//		extern EmberEventControl _carel_MainInit_EC;
+//		emberEventControlSetDelayMS(_carel_MainInit_EC, 1000);
 
 	}
 }
@@ -171,4 +171,13 @@ void _carel_MainInit_EF(void){
 }
 
 
-
+void emberAfOnOffClusterServerAttributeChangedCallback(int8u endpoint,
+                                                       EmberAfAttributeId attributeId){
+	if(attributeId != 0x0000){
+		return;
+	}
+	uint8_t onoff = 0;
+	if(!emberAfReadServerAttribute(endpoint, 6, 0, &onoff, 1)){
+		gLed_SetStillState(endpoint, onoff);
+	}
+}

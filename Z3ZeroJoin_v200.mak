@@ -195,6 +195,7 @@ SOURCE_FILES = \
 ../../../soft/SimplicityStudio/v4/developer/sdks/gecko_sdk_suite/v2.6/protocol\zigbee\app\framework\plugin\network-steering\network-steering-cli.c \
 ../../../soft/SimplicityStudio/v4/developer/sdks/gecko_sdk_suite/v2.6/protocol\zigbee\app\framework\plugin\network-steering\network-steering-v2.c \
 ../../../soft/SimplicityStudio/v4/developer/sdks/gecko_sdk_suite/v2.6/protocol\zigbee\app\framework\plugin\network-steering\network-steering-soc.c \
+../../../soft/SimplicityStudio/v4/developer/sdks/gecko_sdk_suite/v2.6/protocol\zigbee\app\framework\plugin\on-off\on-off.c \
 ../../../soft/SimplicityStudio/v4/developer/sdks/gecko_sdk_suite/v2.6/protocol\zigbee\app\framework\plugin\scan-dispatch\scan-dispatch.c \
 ../../../soft/SimplicityStudio/v4/developer/sdks/gecko_sdk_suite/v2.6/platform\base\hal\plugin\serial\serial.c \
 ../../../soft/SimplicityStudio/v4/developer/sdks/gecko_sdk_suite/v2.6/platform\base\hal\plugin\sim-eeprom1\sim-eeprom.c \
@@ -230,6 +231,7 @@ SOURCE_FILES = \
 ../../../soft/SimplicityStudio/v4/developer/sdks/gecko_sdk_suite/v2.6/protocol\zigbee\app\framework\util\util.c \
 ../../../soft/SimplicityStudio/v4/developer/sdks/gecko_sdk_suite/v2.6/protocol\zigbee\app\framework\util\af-main-soc.c \
 ../../../soft/SimplicityStudio/v4/developer/sdks/gecko_sdk_suite/v2.6/protocol\zigbee\app\framework\util\service-discovery-soc.c \
+../../../soft/SimplicityStudio/v4/developer/sdks/gecko_sdk_suite/v2.6/protocol\zigbee\app\framework\plugin\zll-on-off-server\zll-on-off-server.c \
  \
 Z3ZeroJoin_v200_callbacks.c \ \
 

@@ -31,33 +31,37 @@
     { 0x0005, ZCL_CHAR_STRING_ATTRIBUTE_TYPE, 33, (ATTRIBUTE_MASK_TOKENIZE|ATTRIBUTE_MASK_SINGLETON), { (uint8_t*)&(generatedDefaults[0]) } }, /* 1 / Basic / model identifier*/\
     { 0x0007, ZCL_ENUM8_ATTRIBUTE_TYPE, 1, (ATTRIBUTE_MASK_SINGLETON), { (uint8_t*)0x00 } }, /* 2 / Basic / power source*/\
     { 0xFFFD, ZCL_INT16U_ATTRIBUTE_TYPE, 2, (ATTRIBUTE_MASK_SINGLETON), { (uint8_t*)0x0001 } }, /* 3 / Basic / cluster revision*/\
-    { 0x0000, ZCL_INT8U_ATTRIBUTE_TYPE, 1, (ATTRIBUTE_MASK_TOKENIZE), { (uint8_t*)0x00 } }, /* 4 / RxTx / Mode*/\
-    { 0x0001, ZCL_INT8U_ATTRIBUTE_TYPE, 1, (ATTRIBUTE_MASK_TOKENIZE), { (uint8_t*)0x00 } }, /* 5 / RxTx / Channel*/\
-    { 0x0002, ZCL_INT8S_ATTRIBUTE_TYPE, 1, (ATTRIBUTE_MASK_TOKENIZE), { (uint8_t*)0x00 } }, /* 6 / RxTx / Power*/\
-    { 0x0003, ZCL_INT16U_ATTRIBUTE_TYPE, 2, (ATTRIBUTE_MASK_TOKENIZE), { (uint8_t*)0x0000 } }, /* 7 / RxTx / Header*/\
+    { 0x0000, ZCL_BOOLEAN_ATTRIBUTE_TYPE, 1, (ATTRIBUTE_MASK_TOKENIZE), { (uint8_t*)0x00 } }, /* 4 / On/off / on/off*/\
+    { 0xFFFD, ZCL_INT16U_ATTRIBUTE_TYPE, 2, (0x00), { (uint8_t*)0x0001 } }, /* 5 / On/off / cluster revision*/\
+    { 0x0000, ZCL_INT8U_ATTRIBUTE_TYPE, 1, (ATTRIBUTE_MASK_TOKENIZE), { (uint8_t*)0x00 } }, /* 6 / RxTx / Mode*/\
+    { 0x0001, ZCL_INT8U_ATTRIBUTE_TYPE, 1, (ATTRIBUTE_MASK_TOKENIZE), { (uint8_t*)0x00 } }, /* 7 / RxTx / Channel*/\
+    { 0x0002, ZCL_INT8S_ATTRIBUTE_TYPE, 1, (ATTRIBUTE_MASK_TOKENIZE), { (uint8_t*)0x00 } }, /* 8 / RxTx / Power*/\
+    { 0x0003, ZCL_INT16U_ATTRIBUTE_TYPE, 2, (ATTRIBUTE_MASK_TOKENIZE), { (uint8_t*)0x0000 } }, /* 9 / RxTx / Header*/\
   }
 
 
 // Cluster function static arrays
 #define GENERATED_FUNCTION_ARRAYS \
+const EmberAfGenericClusterFunction emberAfFuncArrayOnOffClusterServer[] = { (EmberAfGenericClusterFunction)emberAfOnOffClusterServerInitCallback,(EmberAfGenericClusterFunction)emberAfOnOffClusterServerAttributeChangedCallback}; \
 
 
 // Clusters definitions
 #define GENERATED_CLUSTERS { \
     { 0x0000, (EmberAfAttributeMetadata*)&(generatedAttributes[0]), 4, 0, (CLUSTER_MASK_SERVER), NULL,  },    \
-    { 0xFC80, (EmberAfAttributeMetadata*)&(generatedAttributes[4]), 4, 5, (CLUSTER_MASK_SERVER), NULL,  },    \
+    { 0x0006, (EmberAfAttributeMetadata*)&(generatedAttributes[4]), 2, 3, (CLUSTER_MASK_SERVER| CLUSTER_MASK_INIT_FUNCTION| CLUSTER_MASK_ATTRIBUTE_CHANGED_FUNCTION), emberAfFuncArrayOnOffClusterServer, },    \
+    { 0xFC80, (EmberAfAttributeMetadata*)&(generatedAttributes[6]), 4, 5, (CLUSTER_MASK_SERVER), NULL,  },    \
   }
 
 
 // Endpoint types
 #define GENERATED_ENDPOINT_TYPES {        \
-    { (EmberAfCluster*)&(generatedClusters[0]), 2, 5 }, \
+    { (EmberAfCluster*)&(generatedClusters[0]), 3, 8 }, \
   }
 
 
 // Cluster manufacturer codes
 #define GENERATED_CLUSTER_MANUFACTURER_CODES {      \
-{0x0001, 0x1254}, \
+{0x0002, 0x1254}, \
   }
 #define GENERATED_CLUSTER_MANUFACTURER_CODE_COUNT (1)
 
@@ -74,7 +78,7 @@
 #define ATTRIBUTE_SINGLETONS_SIZE (37)
 
 // Total size of attribute storage
-#define ATTRIBUTE_MAX_SIZE 5
+#define ATTRIBUTE_MAX_SIZE 8
 
 // Array of endpoints that are supported
 #define FIXED_ENDPOINT_ARRAY { 1 }
@@ -128,8 +132,14 @@
 // Generated data for the command discovery
 #define GENERATED_COMMANDS { \
     { 0x0000, 0x00, COMMAND_MASK_INCOMING_SERVER }, /* Basic / ResetToFactoryDefaults */ \
+    { 0x0006, 0x00, COMMAND_MASK_INCOMING_SERVER }, /* On/off / Off */ \
+    { 0x0006, 0x01, COMMAND_MASK_INCOMING_SERVER }, /* On/off / On */ \
+    { 0x0006, 0x02, COMMAND_MASK_INCOMING_SERVER }, /* On/off / Toggle */ \
+    { 0x0006, 0x40, COMMAND_MASK_INCOMING_SERVER }, /* On/off / OffWithEffect */ \
+    { 0x0006, 0x41, COMMAND_MASK_INCOMING_SERVER }, /* On/off / OnWithRecallGlobalScene */ \
+    { 0x0006, 0x42, COMMAND_MASK_INCOMING_SERVER }, /* On/off / OnWithTimedOff */ \
   }
-#define EMBER_AF_GENERATED_COMMAND_COUNT (1)
+#define EMBER_AF_GENERATED_COMMAND_COUNT (7)
 
 // Command manufacturer codes
 #define GENERATED_COMMAND_MANUFACTURER_CODES {      \
@@ -140,6 +150,7 @@
 
 // Generated reporting configuration defaults
 #define EMBER_AF_GENERATED_REPORTING_CONFIG_DEFAULTS {\
+  { EMBER_ZCL_REPORTING_DIRECTION_REPORTED, 1, 0x0006, 0x0000, CLUSTER_MASK_SERVER, 0x0000, 1, 65534, 0 }, \
 }
-#define EMBER_AF_GENERATED_REPORTING_CONFIG_DEFAULTS_TABLE_SIZE (0)
+#define EMBER_AF_GENERATED_REPORTING_CONFIG_DEFAULTS_TABLE_SIZE (1)
 #endif // SILABS_AF_ENDPOINT_CONFIG

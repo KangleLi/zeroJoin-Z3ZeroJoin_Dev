@@ -40,6 +40,35 @@ static EmberCommandEntry emberCommandChangekeyTable[] = {
   emberCommandEntryActionWithDetails("network", changeKeyCommand, "b", "Change the network key to the 16 byte array provided as an argument to ...", changekeyNetworkCommandArguments),
   emberCommandEntryTerminator(),
 };
+void emberAfPrintAllOff(void);
+void emberAfPrintAllOn(void);
+void printOffCommand(void);
+#if defined(EMBER_COMMAND_INTEPRETER_HAS_DESCRIPTION_FIELD)
+static const char * const debugprintOffCommandArguments[] = {
+  "The debug area mask listed in the <application>.h file",
+  NULL
+};
+#endif
+
+
+void printOnCommand(void);
+#if defined(EMBER_COMMAND_INTEPRETER_HAS_DESCRIPTION_FIELD)
+static const char * const debugprintOnCommandArguments[] = {
+  "The debug area mask listed in the <application>.h file",
+  NULL
+};
+#endif
+
+
+void emberAfPrintStatus(void);
+static EmberCommandEntry emberCommandDebugprintTable[] = {
+  emberCommandEntryActionWithDetails("all_off", emberAfPrintAllOff, "", "Turns off all debug printing", NULL),
+  emberCommandEntryActionWithDetails("all_on", emberAfPrintAllOn, "", "Turns on all compiled in debug printing", NULL),
+  emberCommandEntryActionWithDetails("off", printOffCommand, "u", "Turns off compiled in debug printing for a specific debug printing are ...", debugprintOffCommandArguments),
+  emberCommandEntryActionWithDetails("on", printOnCommand, "u", "Turns on compiled in debug printing for a specific debug printing area ...", debugprintOnCommandArguments),
+  emberCommandEntryActionWithDetails("status", emberAfPrintStatus, "", "Prints out the current settings for debug printing on the device", NULL),
+  emberCommandEntryTerminator(),
+};
 void echoCommand(void);
 #if defined(EMBER_COMMAND_INTEPRETER_HAS_DESCRIPTION_FIELD)
 static const char * const echoCommandArguments[] = {
@@ -75,6 +104,8 @@ static EmberCommandEntry emberCommandEndpointTable[] = {
   emberCommandEntryTerminator(),
 };
 void printEvents(void);
+void helpCommand(void);
+void emAfCliInfoCommand(void);
 void interpanCommand(void);
 #if defined(EMBER_COMMAND_INTEPRETER_HAS_DESCRIPTION_FIELD)
 static const char * const interpanGroupCommandArguments[] = {
@@ -132,6 +163,7 @@ static EmberCommandEntry emberCommandKeysTable[] = {
   emberCommandEntryActionWithDetails("print", keysPrintCommand, "", "Print all security keys out to the command line.", NULL),
   emberCommandEntryTerminator(),
 };
+void printAllLibraryStatus(void);
 void networkPermitJoinCommand(void);
 #if defined(EMBER_COMMAND_INTEPRETER_HAS_DESCRIPTION_FIELD)
 static const char * const networkBroadPjoinCommandArguments[] = {
@@ -314,6 +346,7 @@ static EmberCommandEntry emberCommandOptionApsretryTable[] = {
   emberCommandEntryTerminator(),
 };
 void optionBindingTableClearCommand(void);
+void optionBindingTablePrintCommand(void);
 void optionBindingTableSetCommand(void);
 #if defined(EMBER_COMMAND_INTEPRETER_HAS_DESCRIPTION_FIELD)
 static const char * const optionBindingTableSetCommandArguments[] = {
@@ -329,6 +362,7 @@ static const char * const optionBindingTableSetCommandArguments[] = {
 
 static EmberCommandEntry emberCommandOptionBindingTableTable[] = {
   emberCommandEntryActionWithDetails("clear", optionBindingTableClearCommand, "", "Clear the binding table", NULL),
+  emberCommandEntryActionWithDetails("print", optionBindingTablePrintCommand, "", "Prints out the binding table to the command line.", NULL),
   emberCommandEntryActionWithDetails("set", optionBindingTableSetCommand, "uvuub", "Set a binding table entry for the arguments specified.", optionBindingTableSetCommandArguments),
   emberCommandEntryTerminator(),
 };
@@ -373,6 +407,13 @@ static const char * const optionLinkCommandArguments[] = {
 #endif
 
 
+void optionPrintRxCommand(void);
+void optionPrintRxCommand(void);
+static EmberCommandEntry emberCommandOptionPrintRxMsgsTable[] = {
+  emberCommandEntryActionWithDetails("disable", optionPrintRxCommand, "", "Disable the printing of received messages.", NULL),
+  emberCommandEntryActionWithDetails("enable", optionPrintRxCommand, "", "Enable the printing of received messages.", NULL),
+  emberCommandEntryTerminator(),
+};
 void optionRegisterCommand(void);
 void optionApsSecurityCommand(void);
 void optionApsSecurityCommand(void);
@@ -425,6 +466,7 @@ static EmberCommandEntry emberCommandOptionTable[] = {
   emberCommandEntryActionWithDetails("install-code", optionInstallCodeCommand, "ubb", "Derives a link key from an install code and sets it in the link key ta ...", optionInstallCodeCommandArguments),
 #endif //!defined(EMBER_AF_HAS_SECURITY_PROFILE_NONE)
   emberCommandEntryActionWithDetails("link", optionLinkCommand, "ubb", "Sets a link key in the link key tabl ...", optionLinkCommandArguments),
+  emberCommandEntrySubMenu("print-rx-msgs", emberCommandOptionPrintRxMsgsTable, ""),
   emberCommandEntryActionWithDetails("register", optionRegisterCommand, "", "Initiates Smart Energy Registration including Key Establishmen ...", NULL),
   emberCommandEntrySubMenu("security", emberCommandOptionSecurityTable, ""),
   emberCommandEntryTerminator(),
@@ -629,6 +671,19 @@ static EmberCommandEntry emberCommandPluginTable[] = {
   emberCommandEntrySubMenu("network-steering", emberCommandPluginNetworkSteeringTable, ""),
   emberCommandEntryTerminator(),
 };
+void emberAfPrintAttributeTable(void);
+void emberAfPrintEntropySource(void);
+static EmberCommandEntry emberCommandPrintEntropyTable[] = {
+  emberCommandEntryActionWithDetails("source", emberAfPrintEntropySource, "", "Print the the entropy source that is used for true random number gener ...", NULL),
+  emberCommandEntryTerminator(),
+};
+void printTimeCommand(void);
+static EmberCommandEntry emberCommandPrintTable[] = {
+  emberCommandEntryActionWithDetails("attr", emberAfPrintAttributeTable, "", "Print the attribute table.", NULL),
+  emberCommandEntrySubMenu("entropy", emberCommandPrintEntropyTable, ""),
+  emberCommandEntryActionWithDetails("time", printTimeCommand, "", "Print out the time information", NULL),
+  emberCommandEntryTerminator(),
+};
 void emAfCliRawCommand(void);
 #if defined(EMBER_COMMAND_INTEPRETER_HAS_DESCRIPTION_FIELD)
 static const char * const rawCommandArguments[] = {
@@ -717,6 +772,7 @@ static const char * const timesyncCommandArguments[] = {
 #endif
 
 
+void emAfCliVersionCommand(void);
 void emAfCliWriteCommand(void);
 #if defined(EMBER_COMMAND_INTEPRETER_HAS_DESCRIPTION_FIELD)
 static const char * const writeCommandArguments[] = {
@@ -1210,14 +1266,19 @@ static EmberCommandEntry emberCommandZdoTable[] = {
 EmberCommandEntry emberCommandTable[] = {
   emberCommandEntryActionWithDetails("bsend", emAfCliBsendCommand, "u", "Send using a binding based on the clusterId in the globalApsFrame and  ...", bsendCommandArguments),
   emberCommandEntrySubMenu("changekey", emberCommandChangekeyTable, ""),
+  emberCommandEntrySubMenu("debugprint", emberCommandDebugprintTable, ""),
   emberCommandEntryActionWithDetails("echo", echoCommand, "u", "Turns echo on the command line on or off depending on the argument", echoCommandArguments),
   emberCommandEntrySubMenu("endpoint", emberCommandEndpointTable, ""),
   emberCommandEntryActionWithDetails("events", printEvents, "", "Print the list of timer events.", NULL),
+  emberCommandEntryActionWithDetails("help", helpCommand, "", "Prints out the cli command options for the device", NULL),
+  emberCommandEntryActionWithDetails("info", emAfCliInfoCommand, "", "Gives information about the local node", NULL),
   emberCommandEntrySubMenu("interpan", emberCommandInterpanTable, ""),
   emberCommandEntrySubMenu("keys", emberCommandKeysTable, ""),
+  emberCommandEntryActionWithDetails("libs", printAllLibraryStatus, "", "Lists which optional libraries of the stack are implemented on this de ...", NULL),
   emberCommandEntrySubMenu("network", emberCommandNetworkTable, ""),
   emberCommandEntrySubMenu("option", emberCommandOptionTable, ""),
   emberCommandEntrySubMenu("plugin", emberCommandPluginTable, ""),
+  emberCommandEntrySubMenu("print", emberCommandPrintTable, ""),
   emberCommandEntryActionWithDetails("raw", emAfCliRawCommand, "vb", "Creates a message by specifying the raw byte ...", rawCommandArguments),
   emberCommandEntryActionWithDetails("read", emAfCliReadCommand, "uvvu", "Read an attribute from the local attribute tabl ...", readCommandArguments),
   emberCommandEntryActionWithDetails("reset", resetCommand, "", "resets the device", NULL),
@@ -1226,6 +1287,7 @@ EmberCommandEntry emberCommandTable[] = {
   emberCommandEntryActionWithDetails("send-using-multicast-binding", emAfCliSendUsingMulticastBindingCommand, "u", "When sending using a binding, specify whether a multicast binding shou ...", sendUsingMulticastBindingCommandArguments),
   emberCommandEntryActionWithDetails("send_multicast", emAfCliSendCommand, "vu", "Send a pre-buffered multicast message to a given group id from a given ...", sendMulticastCommandArguments),
   emberCommandEntryActionWithDetails("timesync", emAfCliTimesyncCommand, "vuu", "This sends a read attr for the time of the device specifie ...", timesyncCommandArguments),
+  emberCommandEntryActionWithDetails("version", emAfCliVersionCommand, "", "Shows the version of the software", NULL),
   emberCommandEntryActionWithDetails("write", emAfCliWriteCommand, "uvvuub", "Write an attribute value into the local attribute table", writeCommandArguments),
   emberCommandEntrySubMenu("zcl", emberCommandZclTable, ""),
   emberCommandEntrySubMenu("zdo", emberCommandZdoTable, ""),

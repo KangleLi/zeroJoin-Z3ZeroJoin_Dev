@@ -9,6 +9,7 @@
 
 // Code used to configure the cluster event mechanism
 #define EMBER_AF_GENERATED_EVENT_CODE \
+  EmberEventControl emberAfOnOffClusterServerTickCallbackControl1; \
   extern EmberEventControl _carel_MainInit_EC; \
   extern EmberEventControl _rxtx_test_EC; \
   extern EmberEventControl _zeroJoinRoute_EC; \
@@ -35,10 +36,19 @@
   extern void emberAfPluginUpdateTcLinkKeyBeginTcLinkKeyUpdateEventHandler(void); \
   extern void gAppKeyScan_EventFunction(void); \
   extern void gAppLedBlink_EventFunction(void); \
+  static void clusterTickWrapper(EmberEventControl *control, EmberAfTickFunction callback, uint8_t endpoint) \
+  { \
+    emberAfPushEndpointNetworkIndex(endpoint); \
+    emberEventControlSetInactive(*control); \
+    (*callback)(endpoint); \
+    emberAfPopNetworkIndex(); \
+  } \
+  void emberAfOnOffClusterServerTickCallbackWrapperFunction1(void) { clusterTickWrapper(&emberAfOnOffClusterServerTickCallbackControl1, emberAfOnOffClusterServerTickCallback, 1); } \
 
 
 // EmberEventData structs used to populate the EmberEventData table
 #define EMBER_AF_GENERATED_EVENTS   \
+  { &emberAfOnOffClusterServerTickCallbackControl1, emberAfOnOffClusterServerTickCallbackWrapperFunction1 }, \
   { &_carel_MainInit_EC, _carel_MainInit_EF }, \
   { &_rxtx_test_EC, _rxtx_test_EF }, \
   { &_zeroJoinRoute_EC, _zeroJoinRoute_EF }, \
@@ -55,9 +65,10 @@
 
 
 #define EMBER_AF_GENERATED_EVENT_STRINGS   \
+  "On/off Cluster Server EP 1",  \
   "_carel_ main init_ e c",  \
   "_rxtx_test_ e c",  \
-  "Event data",  \
+  "_zero join route_ e c",  \
   "_zero join tx_ e c",  \
   "Form and Join Library Plugin Cleanup",  \
   "Interpan Plugin FragmentReceive",  \
@@ -68,6 +79,13 @@
   "Update TC Link Key Plugin BeginTcLinkKeyUpdate",  \
   "G app key scan_ event control",  \
   "G app led blink_ event control",  \
+
+
+// The length of the event context table used to track and retrieve cluster events
+#define EMBER_AF_EVENT_CONTEXT_LENGTH 1
+
+// EmberAfEventContext structs used to populate the EmberAfEventContext table
+#define EMBER_AF_GENERATED_EVENT_CONTEXT { 0x1, 0x6, false, EMBER_AF_LONG_POLL, EMBER_AF_OK_TO_SLEEP, &emberAfOnOffClusterServerTickCallbackControl1}
 
 
 #endif // __AF_GEN_EVENT__

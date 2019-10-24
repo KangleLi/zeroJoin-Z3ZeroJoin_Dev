@@ -1969,6 +1969,36 @@ int8_t emberAfPluginNetworkSteeringGetPowerForRadioChannelCallback(uint8_t chann
   return emberAfMaxPowerLevel();
 }
 
+/** @brief On/off Cluster Server Post Init
+ *
+ * Following resolution of the On/Off state at startup for this endpoint, perform any
+ * additional initialization needed; e.g., synchronize hardware state.
+ *
+ * @param endpoint Endpoint that is being initialized  Ver.: always
+ */
+void emberAfPluginOnOffClusterServerPostInitCallback(uint8_t endpoint)
+{
+}
+
+/** @brief Off With Effect
+ *
+ * This callback is called by the ZLL On/Off Server plugin whenever an
+ * OffWithEffect command is received. The application should implement the
+ * effect and variant requested in the command and return
+ * ::EMBER_ZCL_STATUS_SUCCESS if successful or an appropriate error status
+ * otherwise.
+ *
+ * @param endpoint   Ver.: always
+ * @param effectId   Ver.: always
+ * @param effectVariant   Ver.: always
+ */
+EmberAfStatus emberAfPluginZllOnOffServerOffWithEffectCallback(uint8_t endpoint,
+                                                               uint8_t effectId,
+                                                               uint8_t effectVariant)
+{
+  return EMBER_ZCL_STATUS_SUCCESS;
+}
+
 /** @brief Post Attribute Change
  *
  * This function is called by the application framework after it changes an
@@ -2437,22 +2467,6 @@ void emberAfSetSourceRouteOverheadCallback(EmberNodeId destination,
  */
 void emberAfSetTimeCallback(uint32_t utcTime)
 {
-}
-
-/** @brief On/off Cluster Set Value
- *
- * This function is called when the on/off value needs to be set, either through
- * normal channels or as a result of a level change.
- *
- * @param endpoint   Ver.: always
- * @param command   Ver.: always
- * @param initiatedByLevelChange   Ver.: always
- */
-EmberAfStatus emberAfOnOffClusterSetValueCallback(uint8_t endpoint,
-                                                  uint8_t command,
-                                                  bool initiatedByLevelChange)
-{
-  return EMBER_ZCL_STATUS_UNSUP_CLUSTER_COMMAND;
 }
 
 /** @brief Set Wake Timeout Bitmask

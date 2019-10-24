@@ -26348,6 +26348,172 @@ bool emberAfSlWwahClusterUseTrustCenterForClusterServerResponseCallback(uint8_t 
 
 /** @} END SL Works With All Hubs Cluster Callbacks */
 
+/** @name RxTx Cluster Callbacks */
+// @{
+
+/** @brief RxTx Cluster Client Attribute Changed
+ *
+ * Client Attribute Changed
+ *
+ * @param endpoint Endpoint that is being initialized  Ver.: always
+ * @param attributeId Attribute that changed  Ver.: always
+ */
+void RxtxClusterClientAttributeChanged(uint8_t endpoint,
+                                       EmberAfAttributeId attributeId);
+/** @brief RxTx Cluster Client Default Response
+ *
+ * This function is called when the client receives the default response from
+ * the server.
+ *
+ * @param endpoint Destination endpoint  Ver.: always
+ * @param commandId Command id  Ver.: always
+ * @param status Status in default response  Ver.: always
+ */
+void RxtxClusterClientDefaultResponse(uint8_t endpoint,
+                                      uint8_t commandId,
+                                      EmberAfStatus status);
+/** @brief RxTx Cluster Client Init
+ *
+ * Client Init
+ *
+ * @param endpoint Endpoint that is being initialized  Ver.: always
+ */
+void RxtxClusterClientInit(uint8_t endpoint);
+/** @brief RxTx Cluster Client Manufacturer Specific Attribute Changed
+ *
+ * Client Manufacturer Specific Attribute Changed
+ *
+ * @param endpoint Endpoint that is being initialized  Ver.: always
+ * @param attributeId Attribute that changed  Ver.: always
+ * @param manufacturerCode Manufacturer Code of the attribute that changed 
+ * Ver.: always
+ */
+void RxtxClusterClientManufacturerSpecificAttributeChanged(uint8_t endpoint,
+                                                           EmberAfAttributeId attributeId,
+                                                           uint16_t manufacturerCode);
+/** @brief RxTx Cluster Client Message Sent
+ *
+ * Client Message Sent
+ *
+ * @param type The type of message sent  Ver.: always
+ * @param indexOrDestination The destination or address to which the message was
+ * sent  Ver.: always
+ * @param apsFrame The APS frame for the message  Ver.: always
+ * @param msgLen The length of the message  Ver.: always
+ * @param message The message that was sent  Ver.: always
+ * @param status The status of the sent message  Ver.: always
+ */
+void RxtxClusterClientMessageSent(EmberOutgoingMessageType type,
+                                  uint16_t indexOrDestination,
+                                  EmberApsFrame *apsFrame,
+                                  uint16_t msgLen,
+                                  uint8_t *message,
+                                  EmberStatus status);
+/** @brief RxTx Cluster Client Pre Attribute Changed
+ *
+ * Client Pre Attribute Changed
+ *
+ * @param endpoint Endpoint that is being initialized  Ver.: always
+ * @param attributeId Attribute to be changed  Ver.: always
+ * @param attributeType Attribute type  Ver.: always
+ * @param size Attribute size  Ver.: always
+ * @param value Attribute value  Ver.: always
+ */
+EmberAfStatus RxtxClusterClientPreAttributeChanged(uint8_t endpoint,
+                                                   EmberAfAttributeId attributeId,
+                                                   EmberAfAttributeType attributeType,
+                                                   uint8_t size,
+                                                   uint8_t *value);
+/** @brief RxTx Cluster Client Tick
+ *
+ * Client Tick
+ *
+ * @param endpoint Endpoint that is being served  Ver.: always
+ */
+void RxtxClusterClientTick(uint8_t endpoint);
+/** @brief RxTx Cluster Server Attribute Changed
+ *
+ * Server Attribute Changed
+ *
+ * @param endpoint Endpoint that is being initialized  Ver.: always
+ * @param attributeId Attribute that changed  Ver.: always
+ */
+void RxtxClusterServerAttributeChanged(uint8_t endpoint,
+                                       EmberAfAttributeId attributeId);
+/** @brief RxTx Cluster Server Default Response
+ *
+ * This function is called when the server receives the default response from
+ * the client.
+ *
+ * @param endpoint Destination endpoint  Ver.: always
+ * @param commandId Command id  Ver.: always
+ * @param status Status in default response  Ver.: always
+ */
+void RxtxClusterServerDefaultResponse(uint8_t endpoint,
+                                      uint8_t commandId,
+                                      EmberAfStatus status);
+/** @brief RxTx Cluster Server Init
+ *
+ * Server Init
+ *
+ * @param endpoint Endpoint that is being initialized  Ver.: always
+ */
+void RxtxClusterServerInit(uint8_t endpoint);
+/** @brief RxTx Cluster Server Manufacturer Specific Attribute Changed
+ *
+ * Server Manufacturer Specific Attribute Changed
+ *
+ * @param endpoint Endpoint that is being initialized  Ver.: always
+ * @param attributeId Attribute that changed  Ver.: always
+ * @param manufacturerCode Manufacturer Code of the attribute that changed 
+ * Ver.: always
+ */
+void RxtxClusterServerManufacturerSpecificAttributeChanged(uint8_t endpoint,
+                                                           EmberAfAttributeId attributeId,
+                                                           uint16_t manufacturerCode);
+/** @brief RxTx Cluster Server Message Sent
+ *
+ * Server Message Sent
+ *
+ * @param type The type of message sent  Ver.: always
+ * @param indexOrDestination The destination or address to which the message was
+ * sent  Ver.: always
+ * @param apsFrame The APS frame for the message  Ver.: always
+ * @param msgLen The length of the message  Ver.: always
+ * @param message The message that was sent  Ver.: always
+ * @param status The status of the sent message  Ver.: always
+ */
+void RxtxClusterServerMessageSent(EmberOutgoingMessageType type,
+                                  uint16_t indexOrDestination,
+                                  EmberApsFrame *apsFrame,
+                                  uint16_t msgLen,
+                                  uint8_t *message,
+                                  EmberStatus status);
+/** @brief RxTx Cluster Server Pre Attribute Changed
+ *
+ * Server Pre Attribute Changed
+ *
+ * @param endpoint Endpoint that is being initialized  Ver.: always
+ * @param attributeId Attribute to be changed  Ver.: always
+ * @param attributeType Attribute type  Ver.: always
+ * @param size Attribute size  Ver.: always
+ * @param value Attribute value  Ver.: always
+ */
+EmberAfStatus RxtxClusterServerPreAttributeChanged(uint8_t endpoint,
+                                                   EmberAfAttributeId attributeId,
+                                                   EmberAfAttributeType attributeType,
+                                                   uint8_t size,
+                                                   uint8_t *value);
+/** @brief RxTx Cluster Server Tick
+ *
+ * Server Tick
+ *
+ * @param endpoint Endpoint that is being served  Ver.: always
+ */
+void RxtxClusterServerTick(uint8_t endpoint);
+
+/** @} END RxTx Cluster Callbacks */
+
 
 /** @name Network Find Plugin Callbacks */
 // @{

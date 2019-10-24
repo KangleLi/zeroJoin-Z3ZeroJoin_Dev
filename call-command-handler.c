@@ -61,6 +61,9 @@ EmberAfStatus emberAfClusterSpecificCommandParse(EmberAfClusterCommand *cmd)
     case ZCL_BASIC_CLUSTER_ID:
       result = emberAfBasicClusterServerCommandParse(cmd);
       break;
+    case ZCL_ON_OFF_CLUSTER_ID:
+      result = emberAfOnOffClusterServerCommandParse(cmd);
+      break;
     case ZCL_RXTX_CLUSTER_ID:
       result = status(false, true, cmd->mfgSpecific);
       break;
@@ -82,6 +85,78 @@ EmberAfStatus emberAfBasicClusterServerCommandParse(EmberAfClusterCommand *cmd)
       {
         // Command is fixed length: 0
         wasHandled = emberAfBasicClusterResetToFactoryDefaultsCallback();
+        break;
+      }
+    default:
+      {
+        // Unrecognized command ID, error status will apply.
+        break;
+      }
+    }
+  }
+  return status(wasHandled, true, cmd->mfgSpecific);
+}
+
+// Cluster: On/off, server
+EmberAfStatus emberAfOnOffClusterServerCommandParse(EmberAfClusterCommand *cmd)
+{
+  bool wasHandled = false;
+  if (!cmd->mfgSpecific) {
+    switch (cmd->commandId) {
+    case ZCL_OFF_COMMAND_ID:
+      {
+        // Command is fixed length: 0
+        wasHandled = emberAfOnOffClusterOffCallback();
+        break;
+      }
+    case ZCL_ON_COMMAND_ID:
+      {
+        // Command is fixed length: 0
+        wasHandled = emberAfOnOffClusterOnCallback();
+        break;
+      }
+    case ZCL_TOGGLE_COMMAND_ID:
+      {
+        // Command is fixed length: 0
+        wasHandled = emberAfOnOffClusterToggleCallback();
+        break;
+      }
+    case ZCL_OFF_WITH_EFFECT_COMMAND_ID:
+      {
+        uint16_t payloadOffset = cmd->payloadStartIndex;
+        uint8_t effectId;  // Ver.: always
+        uint8_t effectVariant;  // Ver.: always
+        // Command is fixed length: 2
+        if (cmd->bufLen < payloadOffset + 2u) { return EMBER_ZCL_STATUS_MALFORMED_COMMAND; }
+        effectId = emberAfGetInt8u(cmd->buffer, payloadOffset, cmd->bufLen);
+        payloadOffset += 1u;
+        effectVariant = emberAfGetInt8u(cmd->buffer, payloadOffset, cmd->bufLen);
+        wasHandled = emberAfOnOffClusterOffWithEffectCallback(effectId,
+                                                              effectVariant);
+        break;
+      }
+    case ZCL_ON_WITH_RECALL_GLOBAL_SCENE_COMMAND_ID:
+      {
+        // Command is fixed length: 0
+        wasHandled = emberAfOnOffClusterOnWithRecallGlobalSceneCallback();
+        break;
+      }
+    case ZCL_ON_WITH_TIMED_OFF_COMMAND_ID:
+      {
+        uint16_t payloadOffset = cmd->payloadStartIndex;
+        uint8_t onOffControl;  // Ver.: always
+        uint16_t onTime;  // Ver.: always
+        uint16_t offWaitTime;  // Ver.: always
+        // Command is fixed length: 5
+        if (cmd->bufLen < payloadOffset + 5u) { return EMBER_ZCL_STATUS_MALFORMED_COMMAND; }
+        onOffControl = emberAfGetInt8u(cmd->buffer, payloadOffset, cmd->bufLen);
+        payloadOffset += 1u;
+        onTime = emberAfGetInt16u(cmd->buffer, payloadOffset, cmd->bufLen);
+        payloadOffset += 2u;
+        offWaitTime = emberAfGetInt16u(cmd->buffer, payloadOffset, cmd->bufLen);
+        wasHandled = emberAfOnOffClusterOnWithTimedOffCallback(onOffControl,
+                                                               onTime,
+                                                               offWaitTime);
         break;
       }
     default:

@@ -11,6 +11,7 @@
 #define EMBER_AF_GENERATED_EVENT_CODE \
   extern EmberEventControl _carel_MainInit_EC; \
   extern EmberEventControl _rxtx_test_EC; \
+  extern EmberEventControl _zeroJoinRoute_EC; \
   extern EmberEventControl _zeroJoinTx_EC; \
   extern EmberEventControl emberAfPluginFormAndJoinCleanupEventControl; \
   extern EmberEventControl emberAfPluginInterpanFragmentReceiveEventControl; \
@@ -23,6 +24,7 @@
   extern EmberEventControl gAppLedBlink_EventControl; \
   extern void _carel_MainInit_EF(void); \
   extern void _rxtx_test_EF(void); \
+  extern void _zeroJoinRoute_EF(void); \
   extern void _zeroJoinTx_EF(void); \
   extern void emberAfPluginFormAndJoinCleanupEventHandler(void); \
   extern void emberAfPluginInterpanFragmentReceiveEventHandler(void); \
@@ -39,6 +41,7 @@
 #define EMBER_AF_GENERATED_EVENTS   \
   { &_carel_MainInit_EC, _carel_MainInit_EF }, \
   { &_rxtx_test_EC, _rxtx_test_EF }, \
+  { &_zeroJoinRoute_EC, _zeroJoinRoute_EF }, \
   { &_zeroJoinTx_EC, _zeroJoinTx_EF }, \
   { &emberAfPluginFormAndJoinCleanupEventControl, emberAfPluginFormAndJoinCleanupEventHandler }, \
   { &emberAfPluginInterpanFragmentReceiveEventControl, emberAfPluginInterpanFragmentReceiveEventHandler }, \
@@ -54,7 +57,8 @@
 #define EMBER_AF_GENERATED_EVENT_STRINGS   \
   "_carel_ main init_ e c",  \
   "_rxtx_test_ e c",  \
-  "Event data",  \
+  "_zero join route_ e c",  \
+  "_zero join tx_ e c",  \
   "Form and Join Library Plugin Cleanup",  \
   "Interpan Plugin FragmentReceive",  \
   "Interpan Plugin FragmentTransmit",  \
@@ -62,8 +66,8 @@
   "Network Steering Plugin FinishSteering",  \
   "Scan Dispatch Plugin Scan",  \
   "Update TC Link Key Plugin BeginTcLinkKeyUpdate",  \
-  "Event data",  \
-  "Event data",  \
+  "G app key scan_ event control",  \
+  "G app led blink_ event control",  \
 
 
 #endif // __AF_GEN_EVENT__

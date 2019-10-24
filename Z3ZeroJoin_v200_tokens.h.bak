@@ -29,11 +29,11 @@ typedef uint8_t  tokType_on_off;
 typedef uint8_t  tokType_current_level;
 typedef uint16_t  tokType_start_up_color_temperature_mireds;
 typedef int16_t  tokType_local_temperature;
+typedef uint8_t  tokType_model_identifier[33];
 typedef uint8_t  tokType_attribute_mode_id;
 typedef uint8_t  tokType_attribute_channel_id;
 typedef int8_t  tokType_attribute_power_id;
 typedef uint16_t  tokType_attribute_header_id;
-typedef uint8_t  tokType_model_identifier[33];
 #endif // DEFINETYPES
 
 

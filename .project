@@ -396,6 +396,11 @@
 			<locationURI>STUDIO_SDK_LOC/protocol/zigbee/app/framework/plugin/network-steering/network-steering.c</locationURI>
 		</link>
 		<link>
+			<name>on-off/on-off.c</name>
+			<type>1</type>
+			<locationURI>STUDIO_SDK_LOC/protocol/zigbee/app/framework/plugin/on-off/on-off.c</locationURI>
+		</link>
+		<link>
 			<name>scan-dispatch/scan-dispatch.c</name>
 			<type>1</type>
 			<locationURI>STUDIO_SDK_LOC/protocol/zigbee/app/framework/plugin/scan-dispatch/scan-dispatch.c</locationURI>
@@ -559,6 +564,11 @@
 			<name>zcl-framework-core/zdo-cli.c</name>
 			<type>1</type>
 			<locationURI>STUDIO_SDK_LOC/protocol/zigbee/app/framework/cli/zdo-cli.c</locationURI>
+		</link>
+		<link>
+			<name>zll-on-off-server/zll-on-off-server.c</name>
+			<type>1</type>
+			<locationURI>STUDIO_SDK_LOC/protocol/zigbee/app/framework/plugin/zll-on-off-server/zll-on-off-server.c</locationURI>
 		</link>
 		<link>
 			<name>adc/EFR32/adc-efr32.c</name>
