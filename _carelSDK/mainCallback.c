@@ -64,20 +64,22 @@ void emberAfMainTickCallback(void){
 		// Debug
 		EmberEUI64 _rui64_ = {0};
 		emberAfGetEui64(_rui64_);
+		emberAfDebugPrintln("\n\n\n************************************");
 		emberAfDebugPrint("EUI64: ");
-		emberAfDebugPrint(" %X", _rui64_[0]);
-		emberAfDebugPrint(" %X", _rui64_[1]);
-		emberAfDebugPrint(" %X", _rui64_[2]);
-		emberAfDebugPrint(" %X", _rui64_[3]);
-		emberAfDebugPrint(" %X", _rui64_[4]);
-		emberAfDebugPrint(" %X", _rui64_[5]);
-		emberAfDebugPrint(" %X", _rui64_[6]);
-		emberAfDebugPrint(" %X", _rui64_[7]);
+		emberAfDebugPrint("%X", _rui64_[7]);
+		emberAfDebugPrint("%X", _rui64_[6]);
+		emberAfDebugPrint("%X", _rui64_[5]);
+		emberAfDebugPrint("%X", _rui64_[4]);
+		emberAfDebugPrint("%X", _rui64_[3]);
+		emberAfDebugPrint("%X", _rui64_[2]);
+		emberAfDebugPrint("%X", _rui64_[1]);
+		emberAfDebugPrint("%X", _rui64_[0]);
+		emberAfDebugPrintln("\n************************************\n\n");
 		_zeroJoin_PrintStackToken();
 
 		// 启动初始化任务
-//		extern EmberEventControl _carel_MainInit_EC;
-//		emberEventControlSetDelayMS(_carel_MainInit_EC, 1000);
+		extern EmberEventControl _carel_MainInit_EC;
+		emberEventControlSetDelayMS(_carel_MainInit_EC, 1000);
 
 	}
 }
@@ -146,17 +148,24 @@ void _carel_MainInit_EF(void){
 
 	case 2:
 		// 判断网络状态
-		if(emberAfNetworkState() == EMBER_NO_NETWORK){
-			// 未入网进入工程模式
-			_startZeroJoin();
+		{
+			EmberNetworkStatus _ret_NWK = emberAfNetworkState();
+			DEBUG("___NWK status: %d", _ret_NWK);
+			if(_ret_NWK == EMBER_NO_NETWORK){
+				// 未入网进入工程模式
+				_startZeroJoin();
 
-		}else{
-			// 网络连通，进入正常模式 ， LED On
-			gLed_Inactive(1);
-			gLed_SetStillState(1, 1);
-			startup = false;
-			emberEventControlSetInactive(_carel_MainInit_EC);
+			}else{
+				// 网络连通，进入正常模式 ， LED On
+				gLed_Inactive(1);
+				gLed_SetStillState(1, 1);
+				startup = false;
+				emberEventControlSetInactive(_carel_MainInit_EC);
+			}
 		}
+
+
+
 
 		return;
 
